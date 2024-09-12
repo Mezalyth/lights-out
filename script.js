@@ -1,5 +1,6 @@
-const cell = document.querySelectorAll('td');
-
+const cells = document.querySelectorAll('td');
+let moves = 0;
+const moveCount = document.querySelector('h2');
 
 function toggleCell(e) {
     const cell = this;
@@ -28,18 +29,40 @@ function toggleCell(e) {
             neighbor.classList.toggle('on');
         }
     });
+    moves++;
+    moveCount.textContent = `Moves: ${moves}`
+    winCondition();
 }   
 
-cell.forEach(function(cell) {
+cells.forEach(function(cell) {
     cell.addEventListener('click', toggleCell);
 });
+
+
+function winCondition() {
+    let win = true;
+
+    cells.forEach(function(cell) {
+        if (cell.classList.contains('on')) {
+            win = false;
+        }
+    });
+        if (win) {
+            document.querySelector('table').style.backgroundColor = '#0f2863';
+            alert("Congratulations! You've won!");
+        }
+}
 
 function gameReset() {
     const resetButton = document.querySelector('#reset');
     resetButton.addEventListener('click', function() {
-        cell.forEach(function(cell) {
+        cells.forEach(function(cell) {
             cell.classList.add('on');
         });
+    moves = 0;
+    moveCount.textContent = `Moves: ${moves}`;
+    winCondition();
     });
 }
+
 gameReset();
