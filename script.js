@@ -34,3 +34,12 @@ cell.forEach(function(cell) {
     cell.addEventListener('click', toggleCell);
 });
 
+function gameReset() {
+    const resetButton = document.querySelector('#reset');
+    resetButton.addEventListener('click', function() {
+        cell.forEach(function(cell) {
+            cell.classList.add('on');
+        });
+    });
+}
+gameReset();
