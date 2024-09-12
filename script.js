@@ -1,15 +1,36 @@
-const pixel = document.querySelectorAll('td');
+const cell = document.querySelectorAll('td');
 
 
-function toggle(e) {
-    console.log('clicked!', this);
-    if(this.classList.contains('on')) {
-        this.classList.remove('on');
-    } else {
-    this.classList.add('on');
+function toggleCell(e) {
+    const cell = this;
+    const cellId = parseInt(cell.getAttribute('data-id'));
+
+    const neighbors = [];
+
+    if (cellId > 5) {
+        neighbors.push(cellId - 5);
     }
+    if (cellId % 5 !== 1) {
+        neighbors.push(cellId - 1);
+    }
+    if (cellId % 5 !== 0) {
+        neighbors.push(cellId + 1);
+    }
+    if (cellId <= 20) {
+        neighbors.push(cellId + 5);
+    }
+
+    cell.classList.toggle('on');
+
+    neighbors.forEach( id => {
+        const neighbor = document.querySelector(`td[data-id="${id}"]`);
+        if (neighbor) {
+            neighbor.classList.toggle('on');
+        }
+    });
 }   
 
-pixel.forEach(function(pixel) {
-    pixel.addEventListener('click', toggle);
+cell.forEach(function(cell) {
+    cell.addEventListener('click', toggleCell);
 });
+
